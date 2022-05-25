@@ -1,0 +1,66 @@
+import random
+import time
+detector=0 #used for enabling playing again
+def enter_limit():
+    global x
+    x = int(input("Pls enter positive upper limit:"))
+    while x < 1:
+        print("Pls enter positive number")
+        x = int(input("Pls enter upper limit:"))
+        if x>=1:
+            guess(x)
+    else:
+        guess(x)
+
+def startgame():
+    if detector==0:
+
+
+        name,surname=map(str,input("Pls enter your name:\n ").split())
+
+        print(f"Hello dear {name} {surname}")
+        time.sleep(1)
+        global yorno
+        yorno= input("Would u like to play game with us: Yes/No \n")
+        if yorno.lower()=="yes":
+            enter_limit()
+        else:
+            print("Thanks for taking part")
+
+    else:
+        playagain=input("Would u like to play again?: Yes/no \n")
+        if playagain.lower()=="yes":
+            enter_limit()
+        else:
+            print("Thanks for taking part")
+def guess(x):
+    random_number= random.randint(1,x)
+    guess= ''
+
+    count=0
+    while guess!=random_number: # loop runs until we find correct answer
+        guess = int(input("Enter your guess : "))
+
+        try:
+            if guess<1 or guess>x:
+                print("It is not a valid entry")
+
+
+            else:
+                if guess == random_number:
+                    count+=1
+                    print(f"Congratz,you find the correct word in {count} attempt!")
+                    global detector
+                    detector+=1
+                    startgame()
+
+                elif guess > random_number:
+                    print("it is lower")
+                    count+=1
+                elif guess< random_number:
+                    print("It is higher")
+                    count+=1
+        except ValueError:
+            print("It is not a valid entry!") #in case of inputting wrong data type this error will be raised and program will stop running
+
+startgame()
